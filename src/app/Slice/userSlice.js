@@ -8,7 +8,7 @@ const initialState = {loading: false, status: false, userData: null}
 
 export const register = createAsyncThunk('user/register', async (data) => {
     try {
-        const formData = new FormData()
+        const formData = new FormData();
     
         for( const key in data ){
             formData.append(key, data[key])
@@ -16,9 +16,10 @@ export const register = createAsyncThunk('user/register', async (data) => {
         formData.append('avatar', data.avatar[0])
         
         if(data.coverImage){
-            formData.append('avatar', data.avatar[0])
+            formData.append('coverImage', data.coverImage[0])
         }
 
+        console.log(formData.avatar)
         const response = await axiosInstance.post('/users/register', formData)
         if(!response){
             console.log("Data not registered")

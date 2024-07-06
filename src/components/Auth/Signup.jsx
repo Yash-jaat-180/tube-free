@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
-import Input from '../Input.jsx'
-import Button from '../Button.jsx'
+import Input from '../Atom/Input.jsx'
+import Button from '../Atom/Button.jsx'
 import { Link, useNavigate } from 'react-router-dom'
 import { useForm } from 'react-hook-form'
 import { useDispatch, useSelector } from 'react-redux'
@@ -11,11 +11,21 @@ import { register as createAccount} from '../../app/Slice/userSlice.js'
 function Signup() {
     const {register, handleSubmit} = useForm();
     const dispatch = useDispatch();
+    // const navigate = useNavigate();
     
-    const {loading, status, userData} = useSelector(({user}) => user)
+    const authStatus = useSelector(({ auth }) => auth.status)
+    const {loading, userData} = useSelector(({user}) => user)
     
+    if(authStatus){
+        // navigate('/')
+    }
+    if(!authStatus && userData){
+        // navigate('/signup')
+    }
     const handleSignUp = (data) => {
+        console.log(data);
         dispatch(createAccount(data))
+        // navigate('/')
     }
 
     return (
@@ -138,7 +148,7 @@ function Signup() {
                     })}
                 />
                 <Button
-                    content={"SignUp"}
+                    content={loading ? "Loading..." : "SignUp"}
                     textColor={"black"}
                     className='hover:bg-[#9662ea] w-full bg-[#AE7AFF] my-[2vh]'
                     type='submit'
