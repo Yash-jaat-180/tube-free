@@ -12,12 +12,11 @@ function Login() {
     const { handleSubmit, register, formState: { errors } } = useForm()
     const { status, loading } = useSelector(({ auth }) => auth)
     const dispatch = useDispatch();
-    // const navigate = useNavigate();
+    const navigate = useNavigate();
 
     useEffect(() => {
         if (status) {
-            // navigate('/')
-            console.log('navigate to home')
+            navigate('/')
         }
     }, [])
     const handleLogin = (data) => {
