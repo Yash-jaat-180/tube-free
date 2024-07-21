@@ -11,21 +11,19 @@ import { register as createAccount} from '../../app/Slice/userSlice.js'
 function Signup() {
     const {register, handleSubmit} = useForm();
     const dispatch = useDispatch();
-    // const navigate = useNavigate();
+    const navigate = useNavigate();
     
     const authStatus = useSelector(({ auth }) => auth.status)
     const {loading, userData} = useSelector(({user}) => user)
     
     if(authStatus){
-        // navigate('/')
+        navigate('/')
     }
     if(!authStatus && userData){
-        // navigate('/signup')
+        navigate('/login')
     }
     const handleSignUp = (data) => {
-        console.log(data);
         dispatch(createAccount(data))
-        // navigate('/')
     }
 
     return (
