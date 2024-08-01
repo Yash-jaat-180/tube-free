@@ -37,6 +37,7 @@ export const getCurrentUser = createAsyncThunk('auth/getCurrentUser', async () =
         return response.data.data;
     } catch (error) {
         console.error("Backend error :: GEt CURRENT_USER", error)
+        throw error;
     }
 })
 

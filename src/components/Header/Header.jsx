@@ -1,7 +1,6 @@
 import React, { useRef } from 'react'
 import { icons } from '../../assets/Icons'
-import Logout from '../'
-import Logo from '../Atom/Logout'
+import Logout from '../Atom/Logout'
 import { useSelector } from 'react-redux'
 import { NavLink, useNavigate, Link } from 'react-router-dom'
 
@@ -294,7 +293,7 @@ function Header() {
                             )
                         }
                     </div>
-                    {authstatus && <Logout />}
+                    {authstatus && <Logout/>}
                 </nav>
             </header>
             <div className="flex min-h-[calc(100vh-66px)] sm:min-h-[calc(100vh-82px)]">

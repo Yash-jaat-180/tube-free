@@ -5,7 +5,7 @@ import Button from '../Atom/Button'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { login } from '../../app/Slice/authSlice.js'
-import { ToastContainer } from 'react-toastify'
+import { toast, ToastContainer } from 'react-toastify'
 
 function Login() {
 
@@ -20,6 +20,18 @@ function Login() {
         }
     }, [])
     const handleLogin = (data) => {
+        const isEmail = !data.username.startsWith("@");
+        if( isEmail) {
+            let isValidEmail = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(data.username);
+            if(!isValidEmail){
+                toast.error("Please enter a valid email address");
+                return;
+            }
+        }
+        const loginData = isEmail ? 
+        {email: data.username, password: data.password}
+        : {username: data.username.substr(1), password: data.password}
+
         dispatch(login(data))
     }
 
@@ -95,7 +107,7 @@ function Login() {
                         })}
                     />
                     {errors.email?.type === "required" && (
-                        <span className='text-red-600 mt-1'>*Email is required</span>
+                        <span className='text-red-600 mt-1'>*Username or Email is required</span>
                     )}
                     <Input
                         label={"Password"}
@@ -114,17 +126,17 @@ function Login() {
                         className='hover:bg-[#9662ea] w-full bg-[#AE7AFF] my-[2vh]'
                         type='submit'
                     />
-                    
+
                 </form>
 
                 <p className='text-white'>
-                    Already hava an account?
-                    {/* <Link
-        to='/login'
-        className='text-blue-900'
-        >
-            Login
-        </Link> */}
+                    Already hava an account yet?
+                    <Link
+                        to='/signup'
+                        className='text-blue-900'
+                    >
+                        Sign up now
+                    </Link>
                 </p>
             </div>
         </>
