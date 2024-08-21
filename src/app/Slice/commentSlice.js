@@ -9,6 +9,7 @@ const initialState = {
     status: false,
 }
 
+//TODO - Write the write controller for the getVideoComments function
 export const getVideoComments = createAsyncThunk("comment/getVideoComments", async (videoId) => {
     try {
         const response = await axiosInstance.get(`/comments/${videoId}`);

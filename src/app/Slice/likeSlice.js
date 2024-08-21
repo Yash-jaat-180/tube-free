@@ -51,6 +51,17 @@ export const toggleVideoLike = createAsyncThunk("like/toggleVideoLike", async (v
     }
 })
 
+export const toggleLike = createAsyncThunk("like/toggleLike", async ({ qs, toggleLike }) => {
+    try {
+        const response = await axiosInstance.patch(`/like?toggleLike=${toggleLike}&${qs}`);
+        //toast.success(response.data.message);
+        return response.data.data;
+    } catch (error) {
+        toast.error(parseErrorMessage(error.response.data));
+        console.log(error);
+    }
+});
+
 const likeSlice = createSlice({
     name: "like",
     initialState,
@@ -65,6 +76,20 @@ const likeSlice = createSlice({
             state.status = true;
         });
         builder.addCase(getLikedVideos.rejected, (state) => {
+            state.loading = false;
+            state.status = false;
+        });
+        // toggle like
+        builder.addCase(toggleLike.pending, (state) => {
+            state.loading = true;
+            state.data = null;
+        });
+        builder.addCase(toggleLike.fulfilled, (state, action) => {
+            state.loading = false;
+            state.data = action.payload;
+            state.status = true;
+        });
+        builder.addCase(toggleLike.rejected, (state) => {
             state.loading = false;
             state.status = false;
         });

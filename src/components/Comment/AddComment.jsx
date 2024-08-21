@@ -1,8 +1,10 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { getVideoComments } from '../../app/Slice/commentSlice';
+import { addComment, getVideoComments } from '../../app/Slice/commentSlice';
 import { useNavigate } from 'react-router-dom';
 import LoginPopup from '../Auth/LoginPopup';
+import CommentAtom from './CommentAtom';
+import { toast } from 'react-toastify';
 
 function AddComment({ videoId, ownerAvatar }) {
     const navigate = useNavigate();
@@ -23,7 +25,15 @@ function AddComment({ videoId, ownerAvatar }) {
 
     function handleAddComment(event) {
         event.preventDefault();
-        if ()
+        if (!authStatus) return loginPopupDialog.current?.open();
+        const content = event.target.content.value;
+        if(!content){
+            toast.warning("Please Enter some message...");
+            return;
+        }
+        setLocalCommentData(data);
+        dispatch(addComment({videoId, content}));
+        inputRef.current.value = "";
     }
 
     if (!localCommentData)
@@ -96,23 +106,47 @@ function AddComment({ videoId, ownerAvatar }) {
     }
     return (
         <div className="fixed inset-x-0 top-full z-[60] h-[calc(100%-69px)] overflow-auto rounded-lg border bg-[#121212] p-4 duration-200 hover:top-[67px]  peer-focus:top-[67px] sm:static sm:h-auto sm:max-h-[500px] lg:max-h-none">
-            <LoginPopup ref={loginPopupDialog} message="Sign in to Comment on Video..."/>
-            <div class="block">
-                <h6 class="mb-4 font-semibold text-white p-2">573 Comments</h6>
-                <form className='flex w-full rounded-lg bg-transparent border py-2 px-2'>
+            <LoginPopup ref={loginPopupDialog} message="Sign in to Comment on Video..." />
+            <div className="block">
+                <h6 className="mb-4 font-semibold">
+                    {comments?.length > 0 ? comments.length : "No"} Comments
+                </h6>
+                <form
+                    onSubmit={handleAddComment}
+                    className="w-full rounded-lg border px-1 py-1 flex items-center"
+                >
                     <input
                         type="text"
-                        class="w-full rounded-lg border-none  bg-transparent px-2 py-1 placeholder-white focus:outline-none text-white"
-                        placeholder="Add a Comment" />
-                    <button className="rounded-3xl hover:border hover:border-b-white disabled:cursor-not-allowed hover:bg-gray-700 text-white text-sm font-semibold px-2 pb-1 mr-2">cancel</button>
-                    <button
-                        type="submit"
-                        className="rounded-3xl bg-[#ae7aff] disabled:bg-gray-800 hover:bg-[#b48ef1] text-sm text-black font-semibold border border-b-white px-2 pb-1"
-                    >
-                        Comment
-                    </button>
+                        name="content"
+                        ref={inputRef}
+                        className=" w-4/5 bg-transparent focus:outline-none px-2 py-1 placeholder-white"
+                        placeholder="Add a Comment"
+                    />
+                    <span className="w-1/5 flex justify-end mr-1">
+                        <button
+                            type="button"
+                            onClick={() => (inputRef.current.value = "")}
+                            className="rounded-3xl hover:border hover:border-b-white disabled:cursor-not-allowed hover:bg-gray-700 text-white text-sm font-semibold px-2 pb-1 mr-2"
+                        >
+                            cancel
+                        </button>
+                        <button
+                            type="submit"
+                            className="rounded-3xl bg-[#ae7aff] disabled:bg-gray-800 hover:bg-[#b48ef1] text-sm text-black font-semibold border border-b-white px-2 pb-1"
+                        >
+                            Comment
+                        </button>
+                    </span>
                 </form>
             </div>
+            <hr className="my-4 border-white" />
+
+            {comments?.map((comment) => {
+                <div key={comment._id}>
+                    <CommentAtom comment={comment} ownerAvatar={ownerAvatar} videoId={videoId} />
+                    <hr className="my-2 border-white" />
+                </div>
+            })}
         </div>
     )
 }
