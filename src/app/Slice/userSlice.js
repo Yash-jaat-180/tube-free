@@ -43,6 +43,17 @@ export const getUserChannalProfile = createAsyncThunk('user/channalProfile', asy
     }
 })
 
+export const getAboutChannel = createAsyncThunk("user/getAboutChannel", async (username) => {
+    try {
+        const response = await axiosInstance.get(`/about/user/${username}`);
+        //toast.success(response.data.message);
+        return response.data.data;
+    } catch (error) {
+        toast.error(parseErrorMessage(error.response.data));
+        console.log(error);
+    }
+});
+
 const userSlice = createSlice({
     name: 'user',
     initialState,

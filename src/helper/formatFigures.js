@@ -32,9 +32,24 @@ export function formatVideoDuration(duration){
         return `${minutes}:${seconds}`;
     }
 }
+export function formatDate(timestamp) {
+    const date = new Date(timestamp);
+    const days = date.getDay() + 1;
+    const months = date.getMonth() + 1;
 
-//TODO: Format date 
+    const day = days < 10 ? "0" + days : days;
+    const month = months < 10 ? "0" + months : months;
 
+    return day + "/" + month + "/" + date.getFullYear();
+}
 
-//TODO: Format subscription
+export function formatSubscription(count) {
+    if ( count < 1) return "0 Subscirber";
+    else if (count == 1) return "1 Subscriber";
+    else if (count > 1) return `${count} Subscribers`;
+}
 
+export function formatPlural(count, str = "Subscriber"){
+    if (count <= 1) return `${count} ${str}`;
+    else if (count > 1) return `${count} ${str}s`
+}

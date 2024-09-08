@@ -1,23 +1,24 @@
 import { useRef, useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
-import MyInput from '../Components/MyInput';
 
 function App() {
-  const ref = useRef(null);
-
-  function handleClick() {
+  const [count, setCount] = useState(10);
+  const increamentFive = () => {
+    for (let i = 0; i < 5; i++){
+      setCount((prevCount) => (
+        prevCount + 1
+      ));
+    }
   }
-
   return (
-    <form>
-      <MyInput label="Enter your name:" ref={ref} />
-      <button type="button" onClick={handleClick}>
-        Edit
-      </button>
-    </form>
+    <div>
+      <button onClick={() => setCount(prevCount => prevCount -1)}>-</button>
+      <span>{count}</span>
+      <button onClick={() => setCount(count + 1)}>+</button>
+      <button onClick={increamentFive}>increament 5</button>
+    </div>
   )
 }
+
+
 
 export default App

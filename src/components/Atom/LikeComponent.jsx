@@ -33,7 +33,7 @@ function LikeComponent({
                 localLike = true;
                 localTotalLike = like.totalLikes + 1;
                 localDislike = false;
-                localTotalDislike = like.totalLikes - 1;
+                localTotalDislike = dislike.totalDisLikes - 1;
             } else if (like.isLiked) {
                 localLike = false;
                 localTotalLike = like.totalLikes - 1;

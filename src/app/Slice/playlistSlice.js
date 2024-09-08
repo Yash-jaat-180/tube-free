@@ -33,7 +33,7 @@ export const getUserPlaylists = createAsyncThunk("playlist/getUserPlaylists", as
     }
 })
 
-//TODO: Make this controller from the backend;
+
 export const getCurrentPlaylists = createAsyncThunk("playlist/getCurrentPlaylists", async (videoId) => {
     try {
         const response = await axiosInstance.get(`/playlist/user/playlists/${videoId}`);
