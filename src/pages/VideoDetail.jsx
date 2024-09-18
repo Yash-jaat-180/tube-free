@@ -8,6 +8,8 @@ import videojs from 'video.js';
 import { formatTimestamp } from '../helper/formatFigures';
 import LikeComponent from '../components/Atom/LikeComponent';
 import { addVideoToPlaylist, createPlaylist, getCurrentPlaylists, removeVideoFromPlaylist } from '../app/Slice/playlistSlice';
+import UserProfile from '../components/Atom/UserProfile';
+import AddComment from '../components/Comment/AddComment';
 
 function VideoDetail() {
     const navigate = useNavigate();
@@ -456,7 +458,7 @@ function VideoDetail() {
                     </button>
 
                     {/* comments */}
-                    {!loading && <Comments videoId={videoId} ownerAvatar={video?.owner?.avatar} />}
+                    {!loading && <AddComment videoId={videoId} ownerAvatar={video?.owner?.avatar} />}
                 </div>
 
                 {/* side video suggegtions */}

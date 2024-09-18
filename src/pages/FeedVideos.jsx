@@ -1,7 +1,10 @@
 import React, { useEffect, useRef } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import VideoGrid from '../components/Video/VideoGrid'
+import { getAllVideosByOptions } from '../app/Slice/paginationSlice';
 
+
+//TODO - When this project complete understand this feed video what will happen when i chenge this like that something.
 function FeedVideos() {
     const dispatch = useDispatch();
 
@@ -21,7 +24,7 @@ function FeedVideos() {
         sectionRef.current = document.getElementById("scrollable_results_screen");
         sectionRef.current?.scrollTo({ top: 0, behavior: "smooth" });
 
-        let fetchAllVideosPromise = dispatch(getAllVideosByOption({ page: 1, limit: 15 }));
+        let fetchAllVideosPromise = dispatch(getAllVideosByOptions({ page: 1, limit: 15 }));
 
         fetchAllVideosPromise.then(() => {
             fetchedPageRef.current.add(1);
