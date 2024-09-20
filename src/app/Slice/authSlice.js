@@ -115,6 +115,18 @@ export const watchHistory = createAsyncThunk("auth/watch-history", async () => {
     }
 })
 
+export const clearWatchHistory = createAsyncThunk("user/clearWatchHistory", async () => {
+    try {
+        const response = await axiosInstance.delete(`/users/history`);
+        toast.success(response.data.message);
+        return response.data.data;
+    } catch (error) {
+        toast.error(parseErrorMessage(error.response.data));
+        console.log(error);
+        throw error;
+    }
+});
+
 export const userPlaylists = createAsyncThunk("auth/user-playlists", async (userId) => {
     try {
         const response = await axiosInstance.get(`/playlists/user/${userId}`);

@@ -2,8 +2,6 @@ import { createAsyncThunk, createSlice, isAction } from "@reduxjs/toolkit"
 import { axiosInstance } from "../../helper/axious.helper";
 import { toast } from "react-toastify";
 import parseErrorMessage from "../../helper/parseErrMsg.helper"
-import { FlatESLint } from "eslint/use-at-your-own-risk";
-
 
 const initialState = {
     loading: false,
@@ -88,7 +86,27 @@ export const deleteVideo = createAsyncThunk("video/deleteVideo", async (videoId)
     }
 });
 
+export const updateView = createAsyncThunk("video/updateView", async (videoId) => {
+    try {
+        const response = await axiosInstance.patch(`/videos/view/${videoId}`);
+    } catch (error) {
+        toast.error(parseErrorMessage(error.response.data));
+        console.log(error);
+        throw error;
+    }
+});
 
+export const getAllVideos = createAsyncThunk("video/getAllVideos", async (userId) => {
+    try {
+        const response = await axiosInstance.get(`/videos?userId=${userId}`);
+        //toast.success(response.data.message);
+        return response.data.data;
+    } catch (error) {
+        toast.error(parseErrorMessage(error.response.data));
+        console.log(error);
+        throw error;
+    }
+});
 
 const videoSlice = createSlice({
     name: "video",
@@ -161,4 +179,4 @@ const videoSlice = createSlice({
 })
 
 export default videoSlice.reducer;
-export const { emptyVideosState} = videoSlice.actions
+export const { emptyVideosState } = videoSlice.actions
