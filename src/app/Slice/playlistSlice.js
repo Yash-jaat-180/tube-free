@@ -46,10 +46,9 @@ export const getCurrentPlaylists = createAsyncThunk("playlist/getCurrentPlaylist
     }
 })
 
-//TODO: Watch its contoller How to do it.
-export const createPlaylist = createAsyncThunk("playlist/createPlaylist", async ({ data, videoId }) => {
+export const createPlaylist = createAsyncThunk("playlist/createPlaylist", async ({ data}) => {
     try {
-        const response = await axiosInstance.post(`/playlist/${videoId}`, data);
+        const response = await axiosInstance.post(`/playlist`, data);
         toast.success(response.data.message);
         return response.data.data;
     } catch (error) {
