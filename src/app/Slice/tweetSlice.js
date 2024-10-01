@@ -34,7 +34,6 @@ export const getTweet = createAsyncThunk("tweet/getTweet", async (userId) => {
     }
 });
 
-//TODO: Write the controller for that;
 export const getAllTweets = createAsyncThunk("tweet/getAllTweets", async () => {
     try {
         const response = await axiosInstance.get(`/tweets`);
