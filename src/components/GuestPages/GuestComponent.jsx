@@ -1,7 +1,7 @@
 
 import React, { useRef, useState } from "react";
-import { icons } from "../../assets/icons";
-import { LoginPopup } from "../index";
+import LoginPopup from "../Auth/LoginPopup";
+import { icons } from "../../assets/Icons";
 
 function GuestComponent({
     icon,

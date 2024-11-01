@@ -86,6 +86,18 @@ export const deleteVideo = createAsyncThunk("video/deleteVideo", async (videoId)
     }
 });
 
+export const togglePublish = createAsyncThunk("video/togglePublish", async (videoId) => {
+    try {
+        const response = await axiosInstance.patch(`/videos/toggle/publish/${videoId}`);
+        toast.success(response.data.message);
+        return response.data.data;
+    } catch (error) {
+        toast.error(parseErrorMessage(error.response.data));
+        console.log(error);
+        throw error;
+    }
+})
+
 export const updateView = createAsyncThunk("video/updateView", async (videoId) => {
     try {
         const response = await axiosInstance.patch(`/videos/view/${videoId}`);
