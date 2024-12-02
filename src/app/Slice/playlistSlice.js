@@ -60,7 +60,7 @@ export const createPlaylist = createAsyncThunk("playlist/createPlaylist", async 
 
 export const addVideoToPlaylist = createAsyncThunk("playlist/addVideoToPlaylist", async ({ playlistId, videoId }) => {
     try {
-        const response = await axiosInstance.patch(`/playlist/add/${playlistId}/${videoId}`);
+        const response = await axiosInstance.patch(`/playlist/add/${videoId}/${playlistId}`);
         toast.success(response.data.message);
         return response.data.data;
     } catch (error) {
@@ -72,7 +72,7 @@ export const addVideoToPlaylist = createAsyncThunk("playlist/addVideoToPlaylist"
 
 export const removeVideoFromPlaylist = createAsyncThunk("playlist/removeVideoFromPlaylist", async ({ playlistId, videoId }) => {
     try {
-        const response = await axiosInstance.patch(`/playlist/remove/${playlistId}/${videoId}`);
+        const response = await axiosInstance.patch(`/playlist/remove/${videoId}/${playlistId}`);
         toast.success(response.data.message);
         return response.data.data;
     } catch (error) {

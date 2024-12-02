@@ -6,6 +6,8 @@ import LoginPopup from '../Auth/LoginPopup';
 import { formatSubscription } from '../../helper/formatFigures';
 
 function ChannelProfileAtom({ profile, owner = false }) {
+    console.log("owner is : ", owner);
+    console.log("profile is : ", profile);
     const dispatch = useDispatch();
     const [isSubscribed, setIsSubscribed] = useState(profile.isSubscribed);
 
@@ -29,7 +31,8 @@ function ChannelProfileAtom({ profile, owner = false }) {
                 <h1 className="font-bolg text-xl">{profile?.fullName}</h1>
                 <p className="text-sm text-gray-400">@{profile?.username}</p>
                 <p className="text-sm text-gray-400">
-                    {formatSubscription(profile?.subscribersCount)} · {profile.channelsSubscribedToCount}{" "}
+                    {formatSubscription(profile?.subscribersCount)} · {profile?.channalsSubscribedToCount
+                    }{" "}
                     Subscribed
                 </p>
             </div>

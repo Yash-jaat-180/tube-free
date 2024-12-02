@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux'
 import { useParams } from 'react-router-dom';
-import { getTweet } from '../../app/Slice/tweetSlice';
+import { createTweet, getTweet } from '../../app/Slice/tweetSlice';
 import { toast } from 'react-toastify';
 import TweetAtom from './TweetAtom';
 import MyChannelEmptyTweet from './MyChannelEmptyTweet';

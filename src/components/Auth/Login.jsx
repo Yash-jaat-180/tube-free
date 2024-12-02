@@ -3,12 +3,12 @@ import { useForm } from 'react-hook-form'
 import Input from '../Atom/Input'
 import Button from '../Atom/Button'
 import { useDispatch, useSelector } from 'react-redux'
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { login } from '../../app/Slice/authSlice.js'
-import { toast, ToastContainer } from 'react-toastify'
+import { toast} from 'react-toastify'
+import { icons } from '../../assets/Icons.jsx'
 
 function Login() {
-
     const { handleSubmit, register, formState: { errors } } = useForm()
     const { status, loading } = useSelector(({ auth }) => auth)
     const dispatch = useDispatch();
@@ -20,24 +20,24 @@ function Login() {
         }
     }, [])
     const handleLogin = (data) => {
-        const isEmail = !data.username.startsWith("@");
+        const isEmail = !data.email.startsWith("@");
+
         if( isEmail) {
-            let isValidEmail = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(data.username);
+            let isValidEmail = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(data.email);
             if(!isValidEmail){
                 toast.error("Please enter a valid email address");
                 return;
             }
         }
         const loginData = isEmail ? 
-        {email: data.username, password: data.password}
-        : {username: data.username.substr(1), password: data.password}
-
-        dispatch(login(data))
+        {email: data.email, password: data.password}
+        : {username: data.email.substr(1), password: data.password}
+        dispatch(login(loginData));
     }
 
     return (
         <>
-            <div className='flex items-center justify-center flex-col h-screen'>
+            <div className='flex items-center w-full justify-center flex-col h-screen bg-[#121212] text-white'>
                 <div>
                     <svg
                         className='h-[12vh]'
@@ -94,10 +94,12 @@ function Login() {
                     </svg>
                 </div>
 
-                <h2 className='text-white text-[1.5vw]'>Login to your account</h2>
+                <h2 className='text-2xl font-semibold mx-auto mb-2'>Login to your account</h2>
 
 
-                <form onSubmit={handleSubmit(handleLogin)}>
+                <form onSubmit={handleSubmit(handleLogin)}
+                className="mx-auto mt-2 flex w-full max-w-sm flex-col px-4"
+                >
                     <Input
                         label={"Email"}
                         type={"text"}
@@ -120,12 +122,9 @@ function Login() {
                     {errors.password?.type === "required" && (
                         <span className='text-red-600 mt-1'>*Password is required</span>
                     )}
-                    <Button
-                        content={loading ? "Loading..." : "Login"}
-                        textColor={"black"}
-                        className='hover:bg-[#9662ea] w-full bg-[#AE7AFF] my-[2vh]'
-                        type='submit'
-                    />
+                    <Button type="submit" disabled={loading} className="mt-5 disabled:cursor-not-allowed">
+                        {loading ? <span>{icons.loading}</span> : "Login"}
+                    </Button>
 
                 </form>
 

@@ -36,7 +36,6 @@ function VideoForm({ video = false }, ref) {
     useEffect(() => {
         if (showPopup) {
             console.log(dialog.current);
-            dialog.current.showModal();
         }
     }, [showPopup])
 

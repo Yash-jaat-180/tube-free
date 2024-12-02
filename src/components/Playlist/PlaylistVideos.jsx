@@ -8,7 +8,7 @@ import PlaylistForm from "./PlaylistForm";
 import EmptyPlaylist from "./EmptyPlaylist";
 import ConfirmPopup from "../Atom/ConfirmPopup";
 import PlaylistVideoAtom from "./PlaylistVideoAtom";
-import { icons } from "../../assets/icons";
+import { icons } from "../../assets/Icons";
 
 function PlaylistVideos() {
     const dispatch = useDispatch();

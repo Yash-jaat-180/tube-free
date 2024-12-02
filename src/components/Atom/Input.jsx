@@ -1,28 +1,30 @@
-import React, { useId } from 'react'
+import React, { useId } from "react";
 
-const Input = React.forwardRef(function Input(
-    { label,
-        placeholder,
-        type,
-        ...props
-    }, ref) {
-        const id = useId()
+function Input(
+    { label, type = "text", required = false, className = "", labelClassName = "", ...props },
+    ref
+) {
+    const id = useId();
     return (
-        <div className='my-[0.4vw]'>
-            <div className='text-white text-[1.1vw] p-2'>
-                <label htmlFor="name"><span className='text-red-700'>* </span>{label}</label>
-            </div>
+        <div className="flex flex-col w-full">
+            {label && (
+                <label
+                    htmlFor={id}
+                    className={`mb-2 inline-block text-gray-300 ${labelClassName}`}
+                >
+                    {required && <span className=" text-red-600 text-l">* </span>}
+                    {label}
+                </label>
+            )}
             <input
-                className='text-white text-[1.1vw] p-2 border-[1px] outline-none bg-black border-white rounded-md w-[25vw]'
-                type={`${type}`}
-                placeholder={`${placeholder}`}
-                {...props}
-                ref={ref}
+                type={type}
                 id={id}
+                ref={ref}
+                className={`rounded-lg mb-2 border bg-transparent px-3 py-2 ${className}`}
+                {...props}
             />
         </div>
-    )
-})
+    );
+}
 
-
-export default Input
+export default React.forwardRef(Input);

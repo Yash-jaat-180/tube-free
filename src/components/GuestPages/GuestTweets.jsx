@@ -1,5 +1,6 @@
 import React from "react";
 import { icons } from "../../assets/Icons";
+import GuestComponent from "./GuestComponent";
 
 function GuestTweets() {
     return (

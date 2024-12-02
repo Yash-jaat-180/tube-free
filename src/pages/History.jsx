@@ -2,7 +2,7 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { clearWatchHistory, watchHistory } from "../app/Slice/authSlice";
-import { icons } from "../assets/icons";
+import { icons } from "../assets/Icons";
 import VideoList from "../components/Video/VideoList";
 import GuestComponent from "../components/GuestPages/GuestComponent";
 

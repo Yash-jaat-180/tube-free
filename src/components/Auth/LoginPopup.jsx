@@ -39,7 +39,8 @@ function LoginPopup({ route, message = "login to Continue..." }, ref) {
     }, [showPopup])
 
     const handleLogin = (data) => {
-        const isEmail = !data.username.startswith("@");
+        console.log(data.username);
+        const isEmail = !data.username.startsWith("@");
 
         if(isEmail){
             let isValidEmail = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(data.username)
@@ -51,10 +52,10 @@ function LoginPopup({ route, message = "login to Continue..." }, ref) {
 
         const loginData = isEmail ? {email: data.username, password: data.password} : {username: data.username.substr(1), password: data.password};
 
-        dispatch(login(loginData).then((res) => {
+        dispatch(login(loginData)).then((res) => {
             if(res.meta.requestStatus === "fullfilled") if(route) navigate(route);
             dialog.current.close();
-        }))
+        })
     };
 
     const handleClose = () => {

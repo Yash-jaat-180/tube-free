@@ -1,9 +1,9 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { getLikedVideos } from '../app/Slice/likeSlice';
 import VideoList from '../components/Video/VideoList';
 import GuestComponent from '../components/GuestPages/GuestComponent';
-import { icons } from '../assets/icons';
+import { icons } from '../assets/Icons';
 
 function LikedVideos() {
     const [isLoading, setIsLoading] = useState(true);

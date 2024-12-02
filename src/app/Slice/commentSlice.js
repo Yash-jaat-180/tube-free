@@ -5,7 +5,7 @@ import { parseErrorMessage } from "../../helper/parseErrMsg.helper";
 
 const initialState = {
     loading: false,
-    data: null,
+    data: [],
     status: false,
 }
 
@@ -24,6 +24,7 @@ export const getVideoComments = createAsyncThunk("comment/getVideoComments", asy
 export const addComment = createAsyncThunk("comment/addComment", async ({ videoId, content }) => {
     try {
         const response = await axiosInstance.post(`/comments/${videoId}`, { content });
+        toast.success(response.data.message);
         return response.data.data;
     } catch (error) {
         toast.error(parseErrorMessage(error.response.data));
@@ -35,7 +36,7 @@ export const addComment = createAsyncThunk("comment/addComment", async ({ videoI
 export const deleteComment = createAsyncThunk("comment/deleteComment", async ({ commentId }) => {
     try {
         const response = await axiosInstance.delete(`/comments/c/${commentId}`);
-        toast.success(response.data.data);
+        toast.success(response.data.message);
         return response.data.data;
     } catch (error) {
         toast.error(parseErrorMessage(error.response.data));
@@ -83,7 +84,7 @@ const commentSlice = createSlice({
         });
         builder.addCase(addComment.fulfilled, (state, action) => {
             state.loading = false;
-            state.data.unshift(action.payload);
+            state.data?.unshift(action.payload);
             state.status = true;
         });
         builder.addCase(addComment.rejected, (state) => {

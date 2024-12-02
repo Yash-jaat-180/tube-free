@@ -18,10 +18,13 @@ function AddComment({ videoId, ownerAvatar }) {
 
     useEffect(() => {
         if (!videoId) return;
-        dispatch(getVideoComments(videoId).then((res) => {
+        dispatch(getVideoComments(videoId)).then((res) => {
             setLocalCommentData(res.payload);
-        }))
+        })
+        console.log(localCommentData);
     }, [videoId, navigate, dispatch]);
+
+    
 
     function handleAddComment(event) {
         event.preventDefault();
@@ -98,7 +101,7 @@ function AddComment({ videoId, ownerAvatar }) {
         );
 
     const comments = data || localCommentData;
-
+    console.log(comments);
     if (!status && !comments) {
         return (
             <div className="flex w-full h-screen flex-col gap-y-4 px-16 py-4 rounded bg-slate-100/10 animate-pulse"></div>
@@ -141,12 +144,12 @@ function AddComment({ videoId, ownerAvatar }) {
             </div>
             <hr className="my-4 border-white" />
 
-            {comments?.map((comment) => {
+            {comments?.map((comment) => (
                 <div key={comment._id}>
                     <CommentAtom comment={comment} ownerAvatar={ownerAvatar} videoId={videoId} />
                     <hr className="my-2 border-white" />
                 </div>
-            })}
+            ))}
         </div>
     )
 }

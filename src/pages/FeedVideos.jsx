@@ -1,10 +1,8 @@
 import React, { useEffect, useRef } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import VideoGrid from '../components/Video/VideoGrid'
-import { getAllVideosByOptions } from '../app/Slice/paginationSlice';
+import { emptyPagingVideosData, getAllVideosByOptions } from '../app/Slice/paginationSlice';
 
-
-//TODO - When this project complete understand this feed video what will happen when i chenge this like that something.
 function FeedVideos() {
     const dispatch = useDispatch();
 
@@ -16,7 +14,7 @@ function FeedVideos() {
     const fetchedPageRef = useRef();
     const pagingInfoRef = useRef(pagingInfo);
 
-    pagingInfoRef.current = pagingInfo
+    pagingInfoRef.current = pagingInfo;
 
     useEffect(() => {
         fetchedPageRef.current = new Set();
@@ -48,9 +46,9 @@ function FeedVideos() {
 
         if (scrollValue + 5 > scrollHeight) {
             const currentPagingInfo = pagingInfo.current;
-            if (currentPagingInfo.hasNextPage && !fetchedPageRef.current?.has(currentPagingInfo.nextPage)) {
+            if (currentPagingInfo?.hasNextPage && !fetchedPageRef.current?.has(currentPagingInfo.nextPage)) {
                 fetchedPageRef.current.add(currentPagingInfo.nextPage);
-                dispatch(getAllVideosByOption({ page: `${currentPagingInfo.nextPage}`, limit: 15 }));
+                dispatch(getAllVideosByOptions({ page: `${currentPagingInfo.nextPage}`, limit: 15 }));
             }
         }
     }

@@ -18,18 +18,16 @@ export const register = createAsyncThunk('user/register', async (data) => {
         if (data.coverImage) {
             formData.append('coverImage', data.coverImage[0])
         }
-
-        console.log(formData.avatar)
-        const response = await axiosInstance.post('/users/register', formData)
+        const response = await axiosInstance.post('/users/register', formData);
         if (!response) {
             console.log("Data not registered")
         }
-        console.log(response)
+        console.log(response);
         toast.success("Account created successfully")
         return response.data.data
     } catch (error) {
         toast.error(error.response.data.message || parseErrorMessage(error.response.data))
-        console.log(error)
+        console.log(error.response);
     }
 })
 
@@ -46,13 +44,14 @@ export const getUserChannalProfile = createAsyncThunk('user/channalProfile', asy
 export const getAboutChannel = createAsyncThunk("user/getAboutChannel", async (username) => {
     try {
         const response = await axiosInstance.get(`/about/user/${username}`);
-        //toast.success(response.data.message);
+        toast.success(response.data.message);
         return response.data.data;
     } catch (error) {
         toast.error(parseErrorMessage(error.response.data));
         console.log(error);
     }
 });
+
 
 const userSlice = createSlice({
     name: 'user',
@@ -77,7 +76,6 @@ const userSlice = createSlice({
     },
     // get User channal Profile
 
-
     extraReducers: (builder) => {
         builder.addCase(getUserChannalProfile.pending, (state) => {
             state.loading = true
@@ -93,6 +91,15 @@ const userSlice = createSlice({
             state.loading = false
             state.status = false
         })
+
+        //get Channel Profile
+        builder.addCase(getAboutChannel.pending, (state) => {
+            state.loading = true;
+        });
+        builder.addCase(getAboutChannel.fulfilled, (state, action) => {
+            state.userData = action.payload;
+        });
+        builder.addCase(getAboutChannel.rejected, (state) => { });
     }
 })
 

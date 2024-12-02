@@ -1,10 +1,9 @@
 import React from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { formatTimestamp, formatVideoDuration } from '../../helper/formatFigures';
-import { icons } from '../../assets/icons';
+import { icons } from '../../assets/Icons';
 
 function VideoList({ videos = [], loading = true, fetching = false }) {
-
     const navigate = useNavigate();
     if (loading) {
         return (
@@ -132,7 +131,7 @@ function VideoList({ videos = [], loading = true, fetching = false }) {
                 {videos?.length > 0 &&
                     videos.map((video) => (
                         <li key={video._id} className="w-full hover:bg-white/5">
-                            <Link to={`/watch/${video._id}`}>
+                            <Link key={video._id} to={`/watch/${video._id}`}>
                                 <div className="w-full max-w-3xl lg:max-w-4xl gap-x-4 md:flex">
                                     <div className="relative mb-2 w-full md:mb-0 md:w-5/12">
                                         <div className="w-full pt-[56%]">
@@ -169,9 +168,9 @@ function VideoList({ videos = [], loading = true, fetching = false }) {
                                                 </div>
                                                 <p className="text-sm text-gray-200">{video.owner?.fullName}</p>
                                             </div>
-                                            <p className="mt-2 hidden text-sm md:block">
-                                                {video.description.substr(0, 170) +
-                                                    (video.description.length > 170 ? "..." : "")}
+                                            <p className="mt-5 hidden text-sm md:block">
+                                                {video.description?.substr(0, 170) +
+                                                    (video.description?.length > 170 ? "..." : "")}
                                             </p>
                                         </div>
                                     </div>

@@ -13,7 +13,6 @@ export const login = createAsyncThunk('auth/login', async (data) => {
     try {
         const response = await axiosInstance.post('/users/login', data)
         toast.success(response.data.message + "🤩")
-        console.log(response.data.data)
         return response.data.data.user
     } catch (error) {
         console.log(error.message)
@@ -25,7 +24,6 @@ export const logout = createAsyncThunk('/auth/logout', async () => {
     try {
         const response = await axiosInstance.post('/users/logout');
         toast.success(response.data.message)
-        console.log(response.data)
     } catch (error) {
         toast.error(error.message)
     }
@@ -36,7 +34,8 @@ export const getCurrentUser = createAsyncThunk('auth/getCurrentUser', async () =
         const response = await axiosInstance.get('users/current-user');
         return response.data.data;
     } catch (error) {
-        console.error("Backend error :: GEt CURRENT_USER", error)
+        console.error("Backend error :: GEt CURRENT_USER", error);
+        toast.error(error.message);
         throw error;
     }
 })

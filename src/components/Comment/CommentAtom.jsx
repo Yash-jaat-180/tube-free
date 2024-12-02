@@ -3,7 +3,7 @@ import { formatTimestamp } from '../../helper/formatFigures'
 import LikeComponent from '../Atom/LikeComponent'
 import Button from '../Atom/Button';
 import { useDispatch } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { deleteComment, getVideoComments, updateComment } from '../../app/Slice/commentSlice';
 
@@ -13,6 +13,7 @@ function CommentAtom({ comment, videoId, ownerAvatar = "" }) {
     const dispatch = useDispatch();
     const inputRef = useRef();
 
+    console.log(comment);
     useEffect(() => {
         if(isEditing) inputRef.current.focus();
     }, [isEditing])
@@ -39,7 +40,7 @@ function CommentAtom({ comment, videoId, ownerAvatar = "" }) {
         })
     }
     return (
-        <div className="flex justify-between ">
+        <div className="flex justify-between">
             <span className="flex w-full gap-x-4 ">
                 <div className="mt-2 h-11 w-11 shrink-0 border-white">
                     <Link to={`/user/${comment.owner?.username}`}>
@@ -71,6 +72,7 @@ function CommentAtom({ comment, videoId, ownerAvatar = "" }) {
                         />
                     </p>
                     {/* <LikesComponent commentId={comment._id} /> */}
+                    <div className='flex justify-between'>
                     <span
                         className={`flex items-center overflow-hidden rounded-lg max-w-fit h-fit text-xs relative`}
                     >
@@ -135,6 +137,7 @@ function CommentAtom({ comment, videoId, ownerAvatar = "" }) {
                             </span>
                         </form>
                     )}
+                    </div>
                 </div>
             </span>
         </div>

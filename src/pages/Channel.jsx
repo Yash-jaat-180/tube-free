@@ -20,6 +20,7 @@ function Channel({ owner = false }) {
         dispatch(getUserChannalProfile(username)).then((res) => {
             setProfile(res.payload);
         })
+        console.log("profile is : ", profile);
     }, [username, logedInUsername]);
 
     const tabList = [

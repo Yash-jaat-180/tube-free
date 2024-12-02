@@ -38,10 +38,9 @@ function FeedTweets() {
             setFocus("tweet");
             return;
         }
-        dispatch(createTweet({ data }).then(() => {
-            dispatch(getAllTweets());
+        dispatch(createTweet({ data })).then(() => {
             reset();
-        }))
+        })
     }
 
     if (!localTweets) {
@@ -244,7 +243,7 @@ function FeedTweets() {
     }
 
     let tweets = data || localTweets;
-
+    console.log(tweets);
     if (!status && !tweets) {
         return (
             <div className="flex w-full h-screen flex-col gap-y-4 px-16 py-4 rounded bg-slate-100/10 animate-pulse"></div>
@@ -284,7 +283,7 @@ function FeedTweets() {
                 {tweets.length > 0 ? (
                     <ul>
                         {tweets.map((tweet) => (
-                            <TweetAtom key={tweet._id} tweet={tweet} owner={tweet.isOnwer} authStatus={authStatus}/>
+                            <TweetAtom key={tweet._id} tweet={tweet} owner={tweet.isOwner} authStatus={authStatus}/>
                         ))}
                     </ul>
                 ) : (

@@ -15,7 +15,7 @@ function LikeComponent({
 }) {
     const loginPopupDialog = useRef();
     const [like, setLike] = useState({ isLiked, totalLikes });
-    const [dislike, setDisLike] = useState({ isDisLiked, totalDisLikes }); 
+    const [dislike, setDisLike] = useState({ isDisLiked, totalDisLikes });
     const dispatch = useDispatch();
 
     const { status: authStatus } = useSelector(({ auth }) => auth);
@@ -23,7 +23,7 @@ function LikeComponent({
     const handleToggleLike = (status) => {
         if (!authStatus) return loginPopupDialog.current?.open();
 
-        let localLike = like.isLiked,// thesea
+        let localLike = like.isLiked,
             localDislike = dislike.isDisLiked,
             localTotalLike = like.totalLikes,
             localTotalDislike = dislike.totalDisLikes

@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom'
-import { emptyVideosState, getVideo } from '../app/Slice/videoSlice';
+import { emptyVideosState, getVideo, updateVideo, updateView } from '../app/Slice/videoSlice';
 import { toast } from 'react-toastify';
 import VideoPlayer from '../components/Atom/VideoPlayer';
 import videojs from 'video.js';
@@ -10,6 +10,7 @@ import LikeComponent from '../components/Atom/LikeComponent';
 import { addVideoToPlaylist, createPlaylist, getCurrentPlaylists, removeVideoFromPlaylist } from '../app/Slice/playlistSlice';
 import UserProfile from '../components/Atom/UserProfile';
 import AddComment from '../components/Comment/AddComment';
+import LoginPopup from '../components/Auth/LoginPopup';
 
 function VideoDetail() {
     const navigate = useNavigate();
@@ -19,7 +20,7 @@ function VideoDetail() {
     const playerRef = useRef();
 
     const { status: authStatus } = useSelector(({ auth }) => auth);
-    const { loading, status, data: video } = useSelector(({ video }) => video)
+    const { loading, status, data: video } = useSelector(({ video }) => video);
 
     const {
         loading: playlistLoading,
@@ -30,14 +31,12 @@ function VideoDetail() {
     useEffect(() => {
         if (!videoId) return;
         dispatch(getVideo(videoId));
-        //TODO - Write the reducer for that updateView method
-        // dispatch(updateView(videoId));
+        dispatch(updateView(videoId));
         return () => dispatch(emptyVideosState());
     }, [videoId, navigate])
 
     function handlePlaylistVideo(playlistId, status) {
         if (!playlistId && !status) return;
-
         if (status) dispatch(addVideoToPlaylist({ playlistId, videoId }));
         else dispatch(removeVideoFromPlaylist({ playlistId, videoId }));
     }
@@ -103,7 +102,7 @@ function VideoDetail() {
                         </div>
 
                         {/* comments */}
-                        <Comments videoId={video?._id} ownerAvatar={video?.owner?.avatar} />
+                        <AddComment videoId={video?._id} ownerAvatar={video?.owner?.avatar} />
                     </div>
 
                     {/* side video suggegtions */}
@@ -293,7 +292,6 @@ function VideoDetail() {
             videojs.log("player will dispose");
         })
     }
-
     return video && !loading ? (
         <section className="w-full pb-[70px] sm:pb-0">
             {/* sm:ml-[70px] */}
@@ -332,7 +330,6 @@ function VideoDetail() {
                                         totalDisLikes={video.totalDisLikes}
                                     />
                                     {/* Playlist */}
-                                    //TODO - Where the isVideoPresent come from
                                     <div className="relative block">
                                         <LoginPopup
                                             ref={loginPopupDialog}
@@ -445,7 +442,7 @@ function VideoDetail() {
                             </div>
                         </div>
                         {/* owner metadata */}
-                        <UserProfile userId={video?.owner?.username} />
+                        <UserProfile username={video?.owner.username} />
                         <hr className="my-4 border-white" />
                         {/* description */}
                         <div className="h-5 overflow-hidden group-focus:h-auto">

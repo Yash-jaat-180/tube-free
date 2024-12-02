@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { getUserChannalProfile } from '../../app/Slice/userSlice';
 import { toggleSubscription } from '../../app/Slice/subscriptionSlice';
@@ -6,7 +6,7 @@ import LoginPopup from '../Auth/LoginPopup';
 import { Link } from 'react-router-dom';
 import { formatSubscription } from '../../helper/formatFigures';
 
-function UserProfile({ userId }) {
+function UserProfile({ username }) {
     const loginPopupDialog = useRef();
     const dispatch = useDispatch();
 
@@ -16,16 +16,16 @@ function UserProfile({ userId }) {
     const [localData, setLocalData] = useState(null);
 
     useEffect(() => {
-        if (!userId) return;
-        dispatch(getUserChannalProfile(userId).then((res) => setLocalData(res.payload)));
-    }, [userId, dispatch]);
+        if (!username) return;
+        dispatch(getUserChannalProfile(username)).then((res) => setLocalData(res.payload));
+    }, [username, dispatch]);
 
     async function handleToggleSubscription(channelId) {
         if (!authStatus) return loginPopupDialog.current?.open();
         setLocalData((pre) => ({ ...pre, isSubscribed: !pre.isSubscribed }));
-        dispatch(toggleSubscription(channelId).then(() => dispatch(getUserChannalProfile(userId))))
+        dispatch(toggleSubscription(channelId)).then(() => dispatch(getUserChannalProfile(username)))
     }
-    if ((!localData && loading) || !userId)
+    if ((!localData && loading) || !username)
         return (
             <div className="mt-4 flex items-center justify-between">
                 {/* Owner Data */}

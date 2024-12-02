@@ -2,9 +2,12 @@ import React from 'react'
 import { useRef } from 'react'
 import UploadingVideo from './UploadingVideo';
 import StatusAtom from './StatusAtom';
+import VideoForm from './VideoForm';
 
 function ChannelState({ channelStates = null }) {
     const uploadRef = useRef();
+
+    console.log("channel Stat : ", channelStates);
 
     if (!channelStates) {
         return (
@@ -56,7 +59,7 @@ function ChannelState({ channelStates = null }) {
                 </div>
                 {/* Video Upload Button */}
                 <div className="block">
-                    {<UploadingVideo ref={uploadRef} />}
+                    {<VideoForm ref={uploadRef} />}
                     <button
                         onClick={() => uploadRef.current?.open()}
                         className="inline-flex items-center gap-x-2 bg-[#ae7aff] hover:bg-[#ae7aff]/95 border border-transparent hover:border-dotted hover:border-white px-3 py-2 font-semibold text-black"

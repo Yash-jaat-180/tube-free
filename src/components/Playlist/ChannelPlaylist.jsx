@@ -5,7 +5,7 @@ import { Link, useParams } from "react-router-dom";
 import EmptyPlaylist from "./EmptyPlaylist";
 import MyChannelEmptyPlaylist from "./MyChannelEmptyPlaylist";
 import PlaylistForm from "./PlaylistForm";
-import { icons } from "../../assets/icons";
+import { icons } from "../../assets/Icons";
 import { getUserPlaylists } from "../../app/Slice/playlistSlice";
 import { formatTimestamp } from "../../helper/formatFigures";
 

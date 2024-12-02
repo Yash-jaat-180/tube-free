@@ -1,7 +1,7 @@
 import React from "react";
 import { useSelector } from "react-redux";
 import { NavLink } from "react-router-dom";
-import { icons } from "../assets/icons";
+import { icons } from "../assets/Icons";
 
 function Aside() {
     const username = useSelector((state) => state.auth.userData?.username);
@@ -21,13 +21,13 @@ function Aside() {
             name: "Liked Videos",
             route: "feed/liked",
             className: "hidden sm:block",
-            icon: icons.Like,
+            icon: icons.LikedVideo,
         },
         {
             name: "History",
             route: "feed/history",
             className: `${username ? "hidden sm:block" : ""} `,
-            icon: icons.history,
+            icon: icons.History,
         },
         {
             name: "Subscriptions",
@@ -63,7 +63,7 @@ function Aside() {
             name: "Support",
             route: "support",
             className: "hidden sm:block mt-auto",
-            icon: icons.support,
+            icon: icons.Support,
         },
         {
             name: "Settings",

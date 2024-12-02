@@ -4,7 +4,7 @@ import { createPortal } from "react-dom";
 import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
 import { createPlaylist, updatePlaylist } from "../../app/Slice/playlistSlice";
-import { icons } from "../../assets/icons";
+import { icons } from "../../assets/Icons";
 
 function PlaylistForm({ playlist }, ref) {
     const dialog = useRef();
@@ -50,10 +50,9 @@ function PlaylistForm({ playlist }, ref) {
                 if (res.meta.requestStatus === "fulfilled") dialog.current.close();
             });
         } else {
-            console.log("You have to watch how you are destructure the data in createPlaylist : "data)
             dispatch(createPlaylist({ data })).then((res) => {
-                if (res.meta.requestStatus === "fulfilled") dialog.current.close();
-            });
+                if (res.meta.requestStatus === "fulfilled") dialog.current.close()
+            })
         }
     }
 

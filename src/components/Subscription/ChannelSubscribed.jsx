@@ -17,7 +17,6 @@ function ChannelSubscribed({ owner = false, isSubscribers = false }) {
 
     useEffect(() => {
         if (isSubscribers) {
-            console.log("isSubscribers : ", isSubscribers);
             dispatch(getChannelSubscribers(currentUser?._id));
             return;
         }
@@ -90,7 +89,7 @@ function ChannelSubscribed({ owner = false, isSubscribers = false }) {
         if (!input) setSubscribedFiltered(data);
         else {
             const filterdData = data.filter((user) => {
-                user.fullName.toLowerCase().includes(input.toLowerCase())
+                return user.fullName.toLowerCase().includes(input.toLowerCase());
             });
             setSubscribedFiltered(filterdData);
         }

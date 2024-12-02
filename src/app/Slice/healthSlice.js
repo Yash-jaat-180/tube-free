@@ -14,7 +14,7 @@ export const healthCheck = createAsyncThunk("health/healthCheck", async () => {
         return response.data.data;
     } catch (error) {
         toast.error("Oops? Our server is Sick... ");
-        console.log(error);
+        console.log(error, "Oops our server is Suff... ");
     }
 });
 

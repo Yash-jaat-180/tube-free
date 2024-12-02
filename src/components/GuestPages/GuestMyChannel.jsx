@@ -1,6 +1,6 @@
 import React from "react";
 import GuestComponent from "./GuestComponent";
-import { icons } from "../../assets/Icons";
+import { icons } from "../../assets/icons";
 function GuestMyChannel() {
     return (
         <GuestComponent

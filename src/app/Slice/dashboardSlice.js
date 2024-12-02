@@ -23,6 +23,7 @@ export const getChannalStats = createAsyncThunk("dashboard/getChannalStats", asy
 export const getChannalVideos = createAsyncThunk("dashboard/getChannalVideos", async () => {
     try {
         const response = await axiosInstance.get('/dashboard/videos');
+        toast.success(response.data.message);
         return response.data.data;
     } catch (error) {
         toast.error(parseErrorMessage(error.response.data));
@@ -49,15 +50,15 @@ const dashboardSlice = createSlice({
         });
 
         // get ChannalVideos
-        builder.addCase(getChannelVideos.pending, (state) => {
+        builder.addCase(getChannalVideos.pending, (state) => {
             state.loading = true;
         });
-        builder.addCase(getChannelVideos.fulfilled, (state, action) => {
+        builder.addCase(getChannalVideos.fulfilled, (state, action) => {
             state.loading = false;
             state.data.channelVideos = action.payload;
             state.status = true;
         });
-        builder.addCase(getChannelVideos.rejected, (state) => {
+        builder.addCase(getChannalVideos.rejected, (state) => {
             state.loading = false;
             state.status = false;
         });

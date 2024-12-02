@@ -7,6 +7,7 @@ import { Link } from 'react-router-dom';
 import ConfirmPopup from '../Atom/ConfirmPopup';
 import UploadingVideo from './UploadingVideo';
 import { icons } from '../../assets/Icons';
+import VideoForm from './VideoForm';
 
 function AdminVideoAtom({ video }) {
     const dispatch = useDispatch();
@@ -15,8 +16,11 @@ function AdminVideoAtom({ video }) {
 
     const [publishedStatus, setPublishedStatus] = useState(video.isPublished);
 
+
     function handleTogglePublish() {
+        console.log("toggle succ")
         dispatch(togglePublish(video._id)).then((res) => {
+            console.log("dispacht");
             if (res.meta.requestStatus === 'fullfilled') {
                 setPublishedStatus((pre) => !pre);
                 dispatch(getChannalVideos());
@@ -128,7 +132,7 @@ function AdminVideoAtom({ video }) {
                     ref={confirmDialog}
                     actionFunction={handleDeleteVideo}
                 />
-                <UploadingVideo ref={editDialog} video={video} />
+                <VideoForm ref={editDialog} video={video} />
                 <div className="flex gap-4">
                     {/* Delete Button */}
                     <button

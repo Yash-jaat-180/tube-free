@@ -1,7 +1,7 @@
-import { createAsyncThunk, createSlice, isAction } from "@reduxjs/toolkit"
+import { createAsyncThunk, createSlice, } from "@reduxjs/toolkit"
 import { axiosInstance } from "../../helper/axious.helper";
 import { toast } from "react-toastify";
-import parseErrorMessage from "../../helper/parseErrMsg.helper"
+import { parseErrorMessage } from "../../helper/parseErrMsg.helper.js"
 
 const initialState = {
     loading: false,
@@ -57,7 +57,7 @@ export const getVideo = createAsyncThunk("video/getVideo", async (videoId) => {
 export const updateVideo = createAsyncThunk("video/updateVideo", async ({ videoId, data }) => {
     const formData = new FormData();
 
-    for (const key in data) formData.append("key", data[key]);
+    for (const key in data) formData.append(key, data[key]);
 
     if (data.thumbnail) formData.append("thumbnail", data.thumbnail[0]);
 
@@ -101,6 +101,7 @@ export const togglePublish = createAsyncThunk("video/togglePublish", async (vide
 export const updateView = createAsyncThunk("video/updateView", async (videoId) => {
     try {
         const response = await axiosInstance.patch(`/videos/view/${videoId}`);
+        // toast.success(response.data.message);
     } catch (error) {
         toast.error(parseErrorMessage(error.response.data));
         console.log(error);
@@ -170,6 +171,31 @@ const videoSlice = createSlice({
             state.status = true;
         });
         builder.addCase(deleteVideo.rejected, (state) => {
+            state.loading = false;
+            state.status = false;
+        });
+
+        builder.addCase(togglePublish.pending, (state) => {
+            state.loading = true;
+        });
+        builder.addCase(togglePublish.fulfilled, (state, action) => {
+            state.loading = false;
+            // state.data = action.payload;
+            state.status = true;
+        });
+        builder.addCase(togglePublish.rejected, (state) => {
+            state.loading = false;
+            state.status = false;
+        });
+
+        builder.addCase(updateView.pending, (state) => {
+            state.loading = true;
+        });
+        builder.addCase(updateView.fulfilled, (state, action) => {
+            state.loading = false;
+            state.status = true;
+        });
+        builder.addCase(updateView.rejected, (state) => {
             state.loading = false;
             state.status = false;
         });
