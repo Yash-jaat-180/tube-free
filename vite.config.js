@@ -5,7 +5,7 @@ import react from '@vitejs/plugin-react'
 export default defineConfig({
   server:{
     proxy:{
-      '/api': 'http://localhost:8000'
+      '/api': 'https://youtubebackend-0s8q.onrender.com'
     },
     host: true,
   },
