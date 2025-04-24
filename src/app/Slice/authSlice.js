@@ -62,6 +62,7 @@ export const upadateProfile = createAsyncThunk("auth/upadate-profile", async (da
             headers: {
                 "Content-Type": "application/json",
             },
+            withCredentials: true,
         });
         toast.success(response.data.message)
         return response.data.data;
